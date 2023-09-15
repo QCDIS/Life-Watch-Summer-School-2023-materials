@@ -37,7 +37,7 @@ conf_storage_dir = f"{os.environ.get("USER")}/data" # Set the storage directory 
 if not os.path.exists(conf_storage_dir): # If this directory does not exist...
     os.path.mkdir(conf_storage_dir) # Create the directory
 ```
-`Note:` There are two types of parameters recognized by NaaVRE Code analyzer: `param` and `conf`. `param` signifies that the user needs to supply this information when a workflow is executed. This could be a name of a Radar, a date, your password, etc. `conf` signifies that it holds information publicly shared. You would not enter your password here as it would be public to the world. You would use `conf` to indicate where your storage is located, what your maximum number of files needs to be, etc. 
+`Note:` There are two types of parameters recognized by NaaVRE Code analyzer: `param` and `conf`. The keyword `param` signifies that the user needs to supply this information when a workflow is executed. This could be a name of a Radar, a date, your password, etc. The keyword `conf` signifies that it holds information publicly shared. You would not enter your password here as it would be public to the world. You would use `conf` to indicate where your storage is located, what your maximum number of files needs to be, etc. 
 
 Now we have the code inserted, you should be able to see the following:
 `image of vre notebook with conf`
