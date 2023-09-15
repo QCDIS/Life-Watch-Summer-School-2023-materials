@@ -7,6 +7,8 @@
     3. [Approach](#approach)
 2. [Exercises](#exercises)
     1. [Introduction](#introduction-1)
+    2. [Exercise 1. Configuration](#exercise-1-configuration)
+    3. [Exercise 2. Accessing KNMI Data Platform](#exercise-2-accessing-knmi-data-platform)
 
 
 ## Introduction
