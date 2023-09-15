@@ -24,8 +24,6 @@ Most exercises have a `Note:` section. This section generally explains a bit mor
 
 ##### Exercise 1. Configuration
 First, we need to set certain parameters and configurations. We will be using a public API ([What is API?](https://www.ibm.com/topics/api)) key from the Dutch meteorological institute, KNMI (Koninklijk Nederlands Meteorologisch Instituut). With this key, we can authenticate ourselves within the data repository of [The KNMI Data Platform](https://dataplatform.knmi.nl/). From this platform, we will be retrieving Polar Volume Data which contains a host of parameters which can be used to detect biological echoes. 
-
-`Note:` There are two types of parameters recognized by NaaVRE Code analyzer: `param` and `conf`. `param` signifies that the user needs to supply this information when a workflow is executed. This could be a name of a Radar, a date, your password, etc. `conf` signifies that it holds information publicly shared. You would not enter your password here as it would be public to the world. You would use `conf` to indicate where your storage is located, what your maximum number of files needs to be, etc. 
 ```python
 # conf
 import os
@@ -37,10 +35,12 @@ conf_storage_dir = f"{os.environ.get("USER")}/data" # Set the storage directory 
 if not os.path.exists(conf_storage_dir): # If this directory does not exist...
     os.path.mkdir(conf_storage_dir) # Create the directory
 ```
-Now we have the code inserted, you should be able to see the following:
-image of vre notebook with conf
+`Note:` There are two types of parameters recognized by NaaVRE Code analyzer: `param` and `conf`. `param` signifies that the user needs to supply this information when a workflow is executed. This could be a name of a Radar, a date, your password, etc. `conf` signifies that it holds information publicly shared. You would not enter your password here as it would be public to the world. You would use `conf` to indicate where your storage is located, what your maximum number of files needs to be, etc. 
 
-On the left hand side, you can see the `component containeriser`. This allows us to store the code we just entered in the notebook as a code-block. We will eventually make a few more of these code-blocks and use them to make a workflow out of them. Click the `component containeriser` and set ABC to EFG and the base image as vol2bird. Now your code cell is configured and you can go ahead and press Create. It will take a few minutes before it shows up in our cell catalogue. Instead of waiting, we are going to continue adding some more blocks.
+Now we have the code inserted, you should be able to see the following:
+`image of vre notebook with conf`
+
+On the left hand side, you can see the `component containeriser`. `image of component containeriser`. This allows us to store the code we just entered in the notebook as a code-block. We will eventually make a few more of these code-blocks and use them to make a workflow out of them. Click the `component containeriser` and set `ABC to EFG` and the base image as vol2bird. Now your code cell is configured and you can go ahead and press `Create`. It will take a few minutes before it shows up in our cell catalogue. Instead of waiting, we are going to continue adding some more blocks.
 
 ##### Exercise 2. Accessing KNMI Data Platform
 The next step is to create a code-block which can use this information we've specified and talk to the data repository of the KNMI. We are going to create a code-block which can ask the API which files it has for our search query. We will search by specifying three parameters: `start_date`, `end_date`, `radar`. The API will then return us (if successful) a list of file names corresponding to Radar Measurements for our query. 
