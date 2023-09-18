@@ -11,7 +11,10 @@
     3. [Exercise 2. Accessing KNMI Data Platform](#exercise-2-accessing-knmi-data-platform)
     4. [Exercise 3. Downloading Polar Volume data](#exercise-3-downloading-polar-volume-data)
     5. [Exercise 4. Converting Polar Volume data](#exercise-4-converting-polar-volume-data)
-
+3. Extra information
+    1. [Aloft Data]
+    2. [Open data repositories]
+    3. 
 
 ## Introduction
 ### Passerines
@@ -71,4 +74,17 @@ The files that we are downloading are HDF5 files which contain Polar Volumetric 
 ```python
 code that calls KNMI converter
 ```
-`Note:` Both the KNMI and ODIM use the same filetype, [HDF5](https://www.hdfgroup.org/solutions/hdf5/). HDF5 is an industry standard in self describing data storage. It's been around for a long while and is still used a lot. NetCDF has similar abilities and extended features. However, moving a field to use another file format is a challenge on its own. The converter that is being called in this script is written by a [Hidde Leijense](https://www.knmi.nl/research/publications?author=+Hidde+Leijnse) of KNMI. Hidde Leijense is often involved in Research with the Animal Movement Ecology of the University of Amsterdam as the KNMI and UvA collaborate frequently.
+`Note:` The code you copy executes a subprocess call to a custom C program written by [Hidde Leijense](https://www.knmi.nl/research/publications?author=+Hidde+Leijnse) of KNMI. Hidde Leijense is often involved in Research with the Animal Movement Ecology of the University of Amsterdam as the KNMI and UvA collaborate frequently.
+We only convert the structure of data, not the file type. Both the KNMI and ODIM use the same filetype, [HDF5](https://www.hdfgroup.org/solutions/hdf5/). HDF5 is an industry standard hierarchial data storage. 
+
+###### Exercise 5. Producing vertical profiles
+We have all the blocks in place to search, download, convert Polar Volume (PVOL) data into a format that we can start analyzing but also process further into more derivatives, such as a vertical profile. A Vertical Profile (VP) is a way for us to 'summarize' the large amount of data that the Polar Volume shows us. A Polar Volume of The KNMI can have up to 16 different parameters measured per elevation angle (step). Each Radar measures a number of elevation (steps). For that elevation, it measures a host of different quantities and returns those as datasets per quantity and elevation angle. For us to interpret all those elevation angles and quantities is extremely difficult. 
+
+To alleviate this difficulty, a Vertical Profile can be generated which analyses relevant quantities and elevation angles and attempts to determine the number of birds that have passed over an imaginary cross-section across the radar. It produces that information in a format which indicates per height bin a number of metrics. These metrics include the reflectivity in that specific bin, the expected number of birds / area and so on. The [github page of Vol2bird](https://github.com/adokter/vol2bird) contains more information on vol2bird and includes links to publications explaining how vol2bird works. 
+
+We are now going to insert code that will also call a processor, vol2bird, to process PVOL data into VP data. 
+```python
+python code that calls vol2bird and makes vps
+``` 
+`Note:` There is a lot of Python code involved here. Most of this code is applying naming conventions and versioning. The AME group of the University of Amsterdam has over 5.5 million Vertical Profiles stored in two (synchronized) storage systems. In order to provide overview and structure a strong naming convention has been enforced within the AME group to great success.
+
