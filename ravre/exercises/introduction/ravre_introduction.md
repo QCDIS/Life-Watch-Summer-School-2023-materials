@@ -35,9 +35,10 @@ First, we need to set certain parameters and configurations. We will be using a 
 `Important to know`: The API key used during this course is only valid for the duration of the course. KNMI has been kind and provided us with our own custom workshop API-key. They have done this to help us 'guarantee' to have access to the data without having to register or share the key with other anonymous users. As this is courtesy, please keep in mind to keep your queries short. Practically this means: Choose a day to retrieve data for, not a year. If you decide you want to see an effect over a large temporal time span, sample interval can be reduced. For example: every 15th day of the month, every X'th hour of the day. You do not have enough time during this course to download, convert and analyze large amounts of data nor will the API-key allow all students to download a large dataset. Rest assured, throughout the exercises you will be guided on how to query and stay within the `fair-use policy` and still get interesting results.  
 ```python
 # conf
+# configuration
 import os
-param_radar = "" # Den Helder, Herwijnen
-param_api_key = "" #
+param_radar = "" # denhelder,herwijnen,debilt
+param_api_key = '' #
 param_start_date = "" # %Y%m%d%H%M ; 202010152355
 param_end_date = "" # %Y%m%d%H%M ; 202010152355
 conf_storage_dir = f"{os.environ.get("USER")}/data" # Set the storage directory to your personal directory/data.
@@ -88,3 +89,4 @@ python code that calls vol2bird and makes vps
 ``` 
 `Note:` There is a lot of Python code involved here. Most of this code is applying naming conventions and versioning. The AME group of the University of Amsterdam has over 5.5 million Vertical Profiles stored in two (synchronized) storage systems. In order to provide overview and structure a strong naming convention has been enforced within the AME group to great success.
 
+###### Exercise 6. 
