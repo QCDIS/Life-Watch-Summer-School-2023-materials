@@ -45,8 +45,19 @@ Now we have the code inserted, you should be able to see the following:
 On the left hand side, you can see the `component containeriser`. `image of component containeriser`. This allows us to store the code we just entered in the notebook as a code-block. We will eventually make a few more of these code-blocks and use them to make a workflow out of them. Click the `component containeriser` and set `ABC to EFG` and the base image as vol2bird. Now your code cell is configured and you can go ahead and press `Create`. It will take a few minutes before it shows up in our cell catalogue. Instead of waiting, we are going to continue adding some more blocks.
 
 ##### Exercise 2. Accessing KNMI Data Platform
-The next step is to create a code-block which can use this information we've specified and talk to the data repository of the KNMI. We are going to create a code-block which can ask the API which files it has for our search query. We will search by specifying three parameters: `start_date`, `end_date`, `radar`. The API will then return us (if successful) a list of file names corresponding to Radar Measurements for our query. 
+The next step is to create a code-block which can use this information we've specified and communicate with the data repository of the KNMI. We are going to create a code-block which can ask the API which files it has for our search query. We will search by specifying three parameters: `start_date`, `end_date`, `radar`. The API will then return us (if successful) a list of file names corresponding to Radar Measurements for our query. 
 
 ```python
 some code to list files
 ```
+`Note:` The measurement interval for Dutch Meteorological Radars is 5 minutes. This means that each Radar can produce up to 288 measurements in a given day. Occasionally, radars fail to produce measurements and will therefore have less than 288 files.
+
+Let's go ahead and request this code cell to be turned in a functional block, like we did with the previous exercise. Use the `component containeriser` to containerise the newly added code. Ensure to specify each of the types of variables correctly and to use the vol2bird base image. 
+
+##### Exercise 3. Downloading Polar Volume data
+Now we will be adding a block of code which can use the results from the previous block, files within our query, to download and store them at our convenience. 
+
+```python
+some code that downloads the listed files
+```
+
