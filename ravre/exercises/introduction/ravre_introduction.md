@@ -55,9 +55,16 @@ some code to list files
 Let's go ahead and request this code cell to be turned in a functional block, like we did with the previous exercise. Use the `component containeriser` to containerise the newly added code. Ensure to specify each of the types of variables correctly and to use the vol2bird base image. 
 
 ##### Exercise 3. Downloading Polar Volume data
-Now we will be adding a block of code which can use the results from the previous block, files within our query, to download and store them at our convenience. 
+Now we will be adding a block of code which can use the results from the previous block, files within our query, to download and store them at our convenience. Copy the code below and place it in your Jupyter notebook. Follow the same steps as previous exercises and containerise the code by using the `code containeriser` on your left.
 
 ```python
 some code that downloads the listed files
 ```
+`Note:`
 
+##### Exercise 4. Converting Polar Volume data
+The files that we are downloading are HDF5 files which contain Polar Volumetric data. The data is currently structured according the the [data model of KNMI](https://www.knmi.nl/kennis-en-datacentrum/publicatie/knmi-hdf5-data-format-specification-v3-5). Most of our analysis methods expect a data model of [ODIM](https://www.eumetnet.eu/wp-content/uploads/2019/01/ODIM_H5_v23.pdf) which means we need to run a converter. The following code expects a list of files and will call a converter to convert the KNMI format to an ODIM format and returns us a list of files in ODIM format. 
+```python
+code that calls KNMI converter
+```
+`Note:` Both the KNMI and ODIM use the same filetype, [HDF5](https://www.hdfgroup.org/solutions/hdf5/). HDF5 is an industry standard in self describing data storage. It's been around for a long while and is still used a lot. NetCDF has similar abilities and extended features. However, moving a field to use another file format is a challenge on its own. The converter that is being called in this script is written by a [Hidde Leijense](https://www.knmi.nl/research/publications?author=+Hidde+Leijnse) of KNMI. Hidde Leijense is often involved in Research with the Animal Movement Ecology of the University of Amsterdam as the KNMI and UvA collaborate frequently.
