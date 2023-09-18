@@ -67,7 +67,34 @@ Let's go ahead and request this code cell to be turned in a functional block, li
 Now we will be adding a block of code which can use the results from the previous block, files within our query, to download and store them at our convenience. Copy the code below and place it in your Jupyter notebook. Follow the same steps as previous exercises and containerise the code by using the `code containeriser` on your left.
 
 ```python
-some code that downloads the listed files
+#Download-KNMI-files-Herwijnen-v10
+##libraries
+import requests
+from pathlib import Path
+
+knmi_paths = []
+radar_code = 'NL/HRW'
+api_url = "https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files"
+n_files = len(dataset_files)
+print(f"Starting download of {n_files} files.")
+idx = 1
+for dataset_file in dataset_files:
+    print(f"Downloading file {idx}/{n_files}")
+    filename = dataset_file[0]
+    endpoint = f"{api_url}/{filename}/url"
+    get_file_response = requests.get(endpoint, headers={"Authorization": param_api_key})
+    download_url = get_file_response.json().get("temporaryDownloadUrl")
+    dataset_file_response = requests.get(download_url)
+    fname_parts = filename.split('_')
+    fname_date_part = fname_parts[-1].split('.')[0]
+    year = fname_date_part[0:4]
+    month = fname_date_part[4:6]
+    day = fname_date_part[6:8]
+    p = Path(f"{conf_download_dir}/{year}/{month}/{day}/{filename}")
+    knmi_paths.append('./{}'.format(str(p)))
+    p.parent.mkdir(parents=True,exist_ok=True)
+    p.write_bytes(dataset_file_response.content)
+print(knmi_paths)
 ```
 `Note:`
 
