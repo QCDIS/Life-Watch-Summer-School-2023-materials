@@ -57,7 +57,62 @@ On the left hand side, you can see the `component containeriser`. `image of comp
 The next step is to create a code-block which can use this information we've specified and communicate with the data repository of the KNMI. We are going to create a code-block which can ask the API which files it has for our search query. We will search by specifying three parameters: `start_date`, `end_date`, `radar`. The API will then return us (if successful) a list of file names corresponding to Radar Measurements for our query. 
 
 ```python
+#List-KNMI-files-Herwijnen-v10
+## libraries
+import requests
+import pandas as pd
 
+# The number of files this radar produces in a 24 hour period
+daily_measurement_count_hrw = 288 
+# Daily measurements interval in minutes = 24 Hours * 60 Minutes / 288 Daily measurement count 
+measurement_interval_minutes = (24*60)/daily_measurement_count_hrw 
+# Specific API url targetting the Herwijnen dataset
+api_url_herwijnen = 'https://api.dataplatform.knmi.nl/open-data/v1/datasets/radar_volume_full_herwijnen/versions/1.0/files' 
+# KNMI identifier that we need to construct a request
+radar_code = "NL62" 
+# configure 
+api_url = api_url_herwijnen
+## main
+print(f'Searching for PVOL files for Herwijnen between {conf_target_start_day} and {conf_target_end_day} ')
+start_date_timestamp = pd.Timestamp(conf_target_start_day)
+end_date_timestamp = pd.Timestamp(conf_target_end_day)
+date_range = pd.date_range(start_date_timestamp,end_date_timestamp)
+# Considering we need a filename to search for files that occur AFTER that file - we pick the first date of the date range we construct previously
+timestamp = date_range[0]
+# Now, determine the number of files we expect for our request.
+max_keys = len(date_range) * daily_measurement_count_hrw
+# adjust timestamp to step back ONE measurement to include the requested timestamp
+# Subtract 5 minutes from 00:00, this sets to previous day
+timestamp = timestamp - pd.Timedelta(minutes=5)
+# Format the timestamp such that the KNMI API understands
+timestamp = timestamp.strftime("%Y%m%d%H%M")
+# Construct the filename that is used to find files that were measured after the file.
+start_after_filename_prefix = f"RAD_{radar_code}_VOL_NA_{timestamp}.h5"
+# Request a response from the KNMI severs
+list_files_response = requests.get(
+                        f"{api_url}",
+                        headers={"Authorization": param_api_key},
+                        params={"maxKeys": max_keys, "startAfterFilename": start_after_filename_prefix},
+                    )
+list_files = list_files_response.json()
+dataset_files = list_files.get("files")
+# Rewrote this section to pull information from the dict (contained in the main list)
+# we cant pass anything but primitives around between Cells, so we rewrite it into a nested list of strings
+# note:
+# idx0 = filename, idx1 = size, idx2 = lastModified
+dataset_files = [list(dataset_file.values()) for dataset_file in dataset_files]
+# Check the dates, the api sends X number of dates AFTER a timestamp. So, we need to ensure that we are not surpassing our end date. 
+# Example: If one of our requested days != 288 files we will 'overshoot' our last requested day by (288*nDays)-(nActualFiles)).
+filtered_dataset_files = []
+for dataset_file in dataset_files:
+    _,_,_,_,datetimestrext = dataset_file[0].split("_")
+    datetimestr = datetimestrext.split(".")[0]
+    file_timestamp = pd.Timestamp(datetimestr)
+    if file_timestamp.strftime("%Y-%m-%d") in date_range:
+        filtered_dataset_files.append(dataset_file)
+print(f'Requested date range {date_range}')
+print(f'Removed {len(dataset_files) - len(filtered_dataset_files)} entries from dataset files as they were outside the requested date range')
+dataset_files = filtered_dataset_files
 ```
 `Note:` The measurement interval for Dutch Meteorological Radars is 5 minutes. This means that each Radar can produce up to 288 measurements in a given day. Occasionally, radars fail to produce measurements and will therefore have less than 288 files.
 
