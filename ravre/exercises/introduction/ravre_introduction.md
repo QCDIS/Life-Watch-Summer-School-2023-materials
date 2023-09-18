@@ -11,6 +11,9 @@
     3. [Exercise 2. Accessing KNMI Data Platform](#exercise-2-accessing-knmi-data-platform)
     4. [Exercise 3. Downloading Polar Volume data](#exercise-3-downloading-polar-volume-data)
     5. [Exercise 4. Converting Polar Volume data](#exercise-4-converting-polar-volume-data)
+    6. [Exercise 5. Producing vertical profiles](#exercise-5-producing-vertical-profiles)
+    7. [Exercise 6. Creating the workflow](#exercise-6-creating-the-workflow)
+    8. [Exercise 7. Producing data](#exercise-7-producing-data)
 3. Extra information
     1. [Aloft Data]
     2. [Open data repositories]
