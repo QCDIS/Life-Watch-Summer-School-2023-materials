@@ -484,4 +484,27 @@ output_file_list.append(output_file)
 ``` 
 `Note:` There is a lot of Python code involved here. Most of this code is applying naming conventions and versioning. The AME group of the University of Amsterdam has over 5.5 million Vertical Profiles stored in two (synchronized) storage systems. In order to provide overview and structure a strong naming convention has been enforced within the AME group to great success.
 
-###### Exercise 6. 
+###### Exercise 6. Creating the workflow
+Now we have a few functional blocks that we can start to connect. Click the '+' on the top to create a new tab. This tab should have an option called 'Workflow manager'. Click the 'workflow manager' and open the cell catalogue on the right. From the cell catalogue pick the following cells:
+```
+1. List-KNMI-files-v30
+2. Download-KNMI-files-v30
+3. Converter-KNMI-files-v30
+4. PVOL-VP-processor-v30
+```
+These blocks will now be made available to you in the workflow manager. We can now start to connect the individual blocks and to allow the NaaVRE environment to transfer the information between each block and handle its execution. In the previous exercises we had to specify which input and output variables each block had. Now, we can draw lines between all input and output of each block. 
+
+Connect all blocks in a fashion such that the following workflow is created: 
+```
+List-KNMI-files-v30 -> Download-KNMI-files-v30 -> Converter-KNMI-files-v30 -> PVOL-VP-processor-v30
+```
+
+###### Exercise 7. Producing data
+We now have a functional workflow which can retrieve and process any Radar data from the Herwijenen or Den Helder Meteorological Radars. We will now configure our workflow in such a manner that we will zoom in on a known mass migration event. The mass migration event was logged by [Maja Bradaric](https://www.uva.nl/profiel/b/r/m.bradaric/m.bradaric.html) for her PhD work at the AME group, Univeristy of Amsterdam. 
+
+Now, once we submit the workflow we will be prompted for the following information: Start date, end date, radar. Fill in the following information:
+```python
+param_start_date = "2019-12-31T23:00+00:00"
+param_end_date = "2020-01-01T01:00+00:00"
+param_radar = 'denhelder'
+```
