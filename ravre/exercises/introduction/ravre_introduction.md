@@ -42,6 +42,7 @@ param_api_key = '' #
 param_start_date = "" # %Y%m%d%H%M ; 202010152355
 param_end_date = "" # %Y%m%d%H%M ; 202010152355
 conf_storage_dir = f"{os.environ.get("USER")}/data" # Set the storage directory to your personal directory/data.
+conf_convert_dir = 'convert'
 if not os.path.exists(conf_storage_dir): # If this directory does not exist...
     os.path.mkdir(conf_storage_dir) # Create the directory
 ```
@@ -56,7 +57,7 @@ On the left hand side, you can see the `component containeriser`. `image of comp
 The next step is to create a code-block which can use this information we've specified and communicate with the data repository of the KNMI. We are going to create a code-block which can ask the API which files it has for our search query. We will search by specifying three parameters: `start_date`, `end_date`, `radar`. The API will then return us (if successful) a list of file names corresponding to Radar Measurements for our query. 
 
 ```python
-some code to list files
+
 ```
 `Note:` The measurement interval for Dutch Meteorological Radars is 5 minutes. This means that each Radar can produce up to 288 measurements in a given day. Occasionally, radars fail to produce measurements and will therefore have less than 288 files.
 
